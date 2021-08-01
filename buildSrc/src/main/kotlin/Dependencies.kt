@@ -27,6 +27,9 @@ object Dependencies {
             const val LIFECYCLE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFECYCLE}"
             const val ROOM = "androidx.room:room-ktx:${Versions.ROOM}"
             const val FRAGMENT = "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
+            const val DATASTORE_COMMON = "androidx.datastore:datastore-preferences-core:${Versions.DATASTORE}"
+            const val DATASTORE_ANDROID = "androidx.datastore:datastore-preferences:${Versions.DATASTORE}"
+
         }
     }
 

@@ -53,6 +53,7 @@ dependencies {
     api(Dependencies.Kotlin.COROUTINES_ANDROID)
     api(Dependencies.AndroidX.Ktx.CORE)
     api(Dependencies.AndroidX.Ktx.ROOM)
+    api(Dependencies.AndroidX.Ktx.DATASTORE_COMMON)
     api(Dependencies.Dagger.DAGGER_HILT)
     api(Dependencies.Square.RETROFIT)
     api(Dependencies.Square.RETROFIT_JSON)

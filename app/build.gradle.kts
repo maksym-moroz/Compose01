@@ -63,6 +63,7 @@ dependencies {
     implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_ANNOTATIONS)
     implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_VIEWMODEL)
     implementation(Dependencies.AndroidX.Ktx.FRAGMENT)
+    implementation(Dependencies.AndroidX.Ktx.DATASTORE_ANDROID)
 
     androidTestImplementation(Dependencies.AndroidX.J_UNIT)
     androidTestImplementation(Dependencies.AndroidX.COMPOSE_J_UNIT)
