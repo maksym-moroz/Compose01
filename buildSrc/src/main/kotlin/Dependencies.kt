@@ -15,7 +15,6 @@ object Dependencies {
         const val COMPOSE_UI_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE}"
         const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
-        const val ROOM = "androidx.room:room-runtime:${Versions.ROOM}"
         const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
 
         const val J_UNIT = "androidx.test.ext:junit:${Versions.J_UNIT}"

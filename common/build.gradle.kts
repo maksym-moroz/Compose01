@@ -1,9 +1,10 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -11,18 +12,20 @@ android {
     buildToolsVersion = Config.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId = Config.APPLICATION_ID
         minSdk = Config.MIN_SDK_VERSION
         targetSdk = Config.TARGET_SDK_VERSION
-        versionCode = Config.VERSION_CODE
-        versionName = Config.VERSION_NAME
-        testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+                arg("room.incremental", "true")
+            }
+        }
 
         vectorDrawables {
             useSupportLibrary = true
         }
     }
-
 
     buildTypes {
         getByName("release") {
@@ -41,34 +44,26 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE
-    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(project(":common"))
-    implementation(project(":login"))
 
-    implementation(Dependencies.Android.MATERIAL)
-    implementation(Dependencies.AndroidX.APP_COMPAT)
-    implementation(Dependencies.AndroidX.COMPOSE_UI)
-    implementation(Dependencies.AndroidX.COMPOSE_MATERIAL)
-    implementation(Dependencies.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
-    implementation(Dependencies.AndroidX.ACTIVITY_COMPOSE)
-    implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_ANNOTATIONS)
-    implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_VIEWMODEL)
-    implementation(Dependencies.AndroidX.Ktx.FRAGMENT)
+    api(Dependencies.Kotlin.SERIALIZATION_JSON)
+    api(Dependencies.Kotlin.COROUTINES_ANDROID)
+    api(Dependencies.AndroidX.Ktx.CORE)
+    api(Dependencies.AndroidX.Ktx.ROOM)
+    api(Dependencies.Dagger.DAGGER_HILT)
+    api(Dependencies.Square.RETROFIT)
+    api(Dependencies.Square.RETROFIT_JSON)
+
+    kapt(Dependencies.AndroidX.ROOM_COMPILER)
+    kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER)
 
     androidTestImplementation(Dependencies.AndroidX.J_UNIT)
-    androidTestImplementation(Dependencies.AndroidX.COMPOSE_J_UNIT)
     androidTestImplementation(Dependencies.AndroidX.ESPRESSO)
 
-    debugImplementation("androidx.compose.ui:ui-tooling:1.0.0")
+    testApi("junit:junit:4.+")
 }
 
 kapt {

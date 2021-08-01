@@ -5,5 +5,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Compose01"
-include(":app")
 
+include(":app")
+include(":common")
+include(":login")
