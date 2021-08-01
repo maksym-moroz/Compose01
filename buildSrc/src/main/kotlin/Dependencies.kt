@@ -3,6 +3,7 @@ object Dependencies {
     object Kotlin {
         const val STD_LIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.KOTLIN}"
         const val SERIALIZATION_JSON = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.KOTLIN_SERIALIZATION_JSON}"
+        const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES_ANDROID}"
     }
 
     object Android {
@@ -17,6 +18,9 @@ object Dependencies {
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE}"
         const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
         const val LIFECYCLE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE_RUNTIME}"
+        const val ROOM = "androidx.room:room-runtime:${Versions.ROOM}"
+        const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
+        const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
 
         const val J_UNIT = "androidx.test.ext:junit:${Versions.J_UNIT}"
         const val COMPOSE_J_UNIT = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_J_UNIT}"

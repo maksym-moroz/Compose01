@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization")
+    id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
 }
 
@@ -54,6 +55,7 @@ dependencies {
 
     implementation(Dependencies.Kotlin.STD_LIB)
     implementation(Dependencies.Kotlin.SERIALIZATION_JSON)
+    implementation(Dependencies.Kotlin.COROUTINES_ANDROID)
     implementation(Dependencies.Android.MATERIAL)
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.APP_COMPAT)
@@ -62,10 +64,13 @@ dependencies {
     implementation(Dependencies.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
     implementation(Dependencies.AndroidX.ACTIVITY_COMPOSE)
     implementation(Dependencies.AndroidX.LIFECYCLE_RUNTIME)
+    implementation(Dependencies.AndroidX.ROOM)
+    implementation(Dependencies.AndroidX.ROOM_KTX)
     implementation(Dependencies.Dagger.DAGGER_HILT)
     implementation(Dependencies.Square.RETROFIT)
     implementation(Dependencies.Square.RETROFIT_JSON)
 
+    kapt(Dependencies.AndroidX.ROOM_COMPILER)
     kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER)
 
     androidTestImplementation(Dependencies.AndroidX.J_UNIT)
