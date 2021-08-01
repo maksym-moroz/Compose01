@@ -21,4 +21,9 @@ object Dependencies {
         const val COMPOSE_J_UNIT = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_J_UNIT}"
         const val ESPRESSO = "androidx.test.espresso:espresso-core:${Versions.ESPRESSO}"
     }
+
+    object Dagger {
+        const val DAGGER_HILT = "com.google.dagger:hilt-android:${Versions.DAGGER_HILT}"
+        const val DAGGER_HILT_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.DAGGER_HILT}"
+    }
 }

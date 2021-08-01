@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -58,6 +60,8 @@ dependencies {
     implementation(Dependencies.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
     implementation(Dependencies.AndroidX.ACTIVITY_COMPOSE)
     implementation(Dependencies.AndroidX.LIFECYCLE_RUNTIME)
+    implementation(Dependencies.Dagger.DAGGER_HILT)
+    kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER)
 
     androidTestImplementation(Dependencies.AndroidX.J_UNIT)
     androidTestImplementation(Dependencies.AndroidX.COMPOSE_J_UNIT)
@@ -65,4 +69,8 @@ dependencies {
 
     testImplementation("junit:junit:4.+")
     debugImplementation("androidx.compose.ui:ui-tooling:1.0.0")
+}
+
+kapt {
+    correctErrorTypes = true
 }
