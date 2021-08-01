@@ -7,6 +7,7 @@ buildscript {
         classpath(GradlePlugins.ANDROID)
         classpath(GradlePlugins.KOTLIN)
         classpath(GradlePlugins.DAGGER)
+        classpath(GradlePlugins.SERIALIZATION)
     }
 }
 

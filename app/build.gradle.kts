@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    kotlin("plugin.serialization")
     id("dagger.hilt.android.plugin")
 }
 
@@ -52,6 +53,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(Dependencies.Kotlin.STD_LIB)
+    implementation(Dependencies.Kotlin.SERIALIZATION_JSON)
     implementation(Dependencies.Android.MATERIAL)
     implementation(Dependencies.AndroidX.CORE_KTX)
     implementation(Dependencies.AndroidX.APP_COMPAT)
@@ -61,6 +63,7 @@ dependencies {
     implementation(Dependencies.AndroidX.ACTIVITY_COMPOSE)
     implementation(Dependencies.AndroidX.LIFECYCLE_RUNTIME)
     implementation(Dependencies.Dagger.DAGGER_HILT)
+
     kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER)
 
     androidTestImplementation(Dependencies.AndroidX.J_UNIT)
