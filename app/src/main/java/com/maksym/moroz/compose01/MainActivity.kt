@@ -10,12 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.maksym.moroz.compose01.ui.theme.Compose01Theme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity(), CoroutineScope {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -27,9 +24,6 @@ class MainActivity : ComponentActivity(), CoroutineScope {
             }
         }
     }
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
 }
 
 @Composable
