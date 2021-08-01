@@ -63,6 +63,8 @@ dependencies {
     implementation(Dependencies.AndroidX.ACTIVITY_COMPOSE)
     implementation(Dependencies.AndroidX.LIFECYCLE_RUNTIME)
     implementation(Dependencies.Dagger.DAGGER_HILT)
+    implementation(Dependencies.Square.RETROFIT)
+    implementation(Dependencies.Square.RETROFIT_JSON)
 
     kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER)
 

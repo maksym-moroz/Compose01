@@ -27,4 +27,9 @@ object Dependencies {
         const val DAGGER_HILT = "com.google.dagger:hilt-android:${Versions.DAGGER_HILT}"
         const val DAGGER_HILT_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.DAGGER_HILT}"
     }
+
+    object Square {
+        const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
+        const val RETROFIT_JSON = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.RETROFIT_JSON}"
+    }
 }

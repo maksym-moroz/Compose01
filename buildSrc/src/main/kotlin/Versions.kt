@@ -11,6 +11,8 @@ object Versions {
     const val ACTIVITY_COMPOSE = "1.3.0"
     const val LIFECYCLE_RUNTIME = "2.3.1"
     const val DAGGER_HILT = "2.37"
+    const val RETROFIT = "2.9.0"
+    const val RETROFIT_JSON = "0.8.0"
 
     const val J_UNIT = "1.1.3"
     const val COMPOSE_J_UNIT = "1.0.0"
