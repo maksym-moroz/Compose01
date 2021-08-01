@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization")
@@ -11,12 +11,8 @@ android {
     buildToolsVersion = Config.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId = Config.APPLICATION_ID
         minSdk = Config.MIN_SDK_VERSION
         targetSdk = Config.TARGET_SDK_VERSION
-        versionCode = Config.VERSION_CODE
-        versionName = Config.VERSION_NAME
-        testInstrumentationRunner = Config.ANDROID_TEST_INSTRUMENTATION
 
         vectorDrawables {
             useSupportLibrary = true
@@ -52,7 +48,6 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":common"))
-    implementation(project(":login"))
 
     implementation(Dependencies.Android.MATERIAL)
     implementation(Dependencies.AndroidX.APP_COMPAT)
