@@ -1,12 +1,19 @@
 package com.maksym.moroz.common.domain.core.model.user
 
-sealed class ToDoUser(val profile: UserProfile) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+sealed interface ToDoUser : Parcelable {
+    val profile: UserProfile
+
+    @Parcelize
     class Usual(
         val preferences: UserPreferences,
-        profile: UserProfile,
-    ) : ToDoUser(profile)
+        override val profile: UserProfile,
+    ) : ToDoUser
 
+    @Parcelize
     class Guest(
-        profile: UserProfile,
-    ) : ToDoUser(profile)
+        override val profile: UserProfile,
+    ) : ToDoUser
 }
