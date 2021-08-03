@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Compose01</string>
+    <string name="new_note_question_mark">New Note?</string>
 </resources>

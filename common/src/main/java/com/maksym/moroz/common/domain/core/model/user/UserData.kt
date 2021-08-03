@@ -1,15 +1,15 @@
 package com.maksym.moroz.common.domain.core.model.user
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import kotlin.random.Random
 
-@Parcelize
+@Serializable
 data class UserData(
     val firstName: String,
     val lastName: String,
     val picture: String,
-) : Parcelable {
+) {
+
     companion object {
         private const val SEED = 42
 

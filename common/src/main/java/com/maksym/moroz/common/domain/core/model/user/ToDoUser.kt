@@ -1,19 +1,19 @@
 package com.maksym.moroz.common.domain.core.model.user
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-sealed interface ToDoUser : Parcelable {
-    val profile: UserProfile
+@Serializable
+sealed class ToDoUser {
+    abstract val profile: UserProfile
 
-    @Parcelize
+    @Serializable
     class Usual(
         val preferences: UserPreferences,
         override val profile: UserProfile,
-    ) : ToDoUser
+    ) : ToDoUser()
 
-    @Parcelize
+    @Serializable
     class Guest(
         override val profile: UserProfile,
-    ) : ToDoUser
+    ) : ToDoUser()
 }

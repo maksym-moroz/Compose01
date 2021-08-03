@@ -1,9 +1,8 @@
 package com.maksym.moroz.common.domain.core.model.user
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class UserPreferences(
     val showOnline: Boolean,
-) : Parcelable
+)

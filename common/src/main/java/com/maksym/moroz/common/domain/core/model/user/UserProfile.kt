@@ -1,22 +1,22 @@
 package com.maksym.moroz.common.domain.core.model.user
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-sealed interface UserProfile : Parcelable {
-    val data: UserData
-    val session: UserSession
+@Serializable
+sealed class UserProfile {
+    abstract val data: UserData
+    abstract val session: UserSession
 
-    @Parcelize
+    @Serializable
     class Usual(
         val credentials: UserCredentials,
         override val data: UserData,
         override val session: UserSession,
-    ) : UserProfile
+    ) : UserProfile()
 
-    @Parcelize
+    @Serializable
     class Guest(
         override val data: UserData,
         override val session: UserSession,
-    ) : UserProfile
+    ) : UserProfile()
 }

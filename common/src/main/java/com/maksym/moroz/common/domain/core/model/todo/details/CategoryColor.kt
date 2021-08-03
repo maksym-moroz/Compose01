@@ -1,4 +1,4 @@
-package com.maksym.moroz.common
+package com.maksym.moroz.common.domain.core.model.todo.details
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
@@ -15,5 +15,4 @@ enum class CategoryColor(
     YELLOW(Color.YELLOW),
     MAGENTA(Color.MAGENTA),
     CYAN(Color.CYAN),
-
 }
