@@ -6,7 +6,6 @@ import androidx.room.TypeConverters
 import com.maksym.moroz.common.data.storage.converters.TaskCategoryConverter
 import com.maksym.moroz.common.data.storage.converters.TaskItemConverter
 import com.maksym.moroz.common.data.storage.converters.TaskTypeConverter
-import com.maksym.moroz.common.data.storage.converters.ToDoConverter
 import com.maksym.moroz.common.data.storage.dao.ToDoDao
 import com.maksym.moroz.common.domain.core.model.todo.ToDo
 
@@ -16,7 +15,6 @@ import com.maksym.moroz.common.domain.core.model.todo.ToDo
     exportSchema = true,
 )
 @TypeConverters(
-    ToDoConverter::class,
     TaskTypeConverter::class,
     TaskItemConverter::class,
     TaskCategoryConverter::class,

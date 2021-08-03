@@ -31,6 +31,7 @@ class MainListViewModel @Inject constructor(
     private fun loadItems() {
         viewModelScope.launch {
             repository.loadToDoListFlow()
+                .distinctUntilChanged()
                 .collect {
                     _list.emit(it)
                 }

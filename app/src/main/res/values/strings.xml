@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Compose01</string>
-    <string name="new_note_question_mark">New Note?</string>
+    <string name="got_a_note_question_mark">Got a note?</string>
+    <string name="nothing_to_do">Nothing to do</string>
 </resources>

@@ -29,16 +29,16 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = ScreenNavigation.LIST.name,
+                    startDestination = ScreenNavigation.LIST.route,
                 ) {
-                    composable(ScreenNavigation.LIST.name) {
+                    composable(ScreenNavigation.LIST.route) {
                         MainListView(
                             navController = navController,
                             viewModel = mainListViewModel,
                         )
                     }
 
-                    composable(ScreenNavigation.DETAILS.name) {
+                    composable(route = ScreenNavigation.DETAILS.route) {
                         MainDetailsView(
                             navController = navController,
                             viewModel = mainDetailsViewModel,

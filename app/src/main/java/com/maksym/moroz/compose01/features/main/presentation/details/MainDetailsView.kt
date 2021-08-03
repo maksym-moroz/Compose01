@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,13 +22,16 @@ fun MainDetailsView(
     navController: NavController,
     viewModel: MainDetailsViewModel,
 ) {
-    val title = viewModel.title.collectAsState()
-    val description = viewModel.description.collectAsState()
+    val title = remember(viewModel) { viewModel.title }
+        .collectAsState()
+    val description = remember(viewModel) { viewModel.description }
+        .collectAsState()
 
     Column(
         modifier = Modifier
-            .padding(8.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(8.dp),
+
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -34,12 +39,15 @@ fun MainDetailsView(
         OutlinedTextField(
             value = title.value,
             onValueChange = { viewModel.updateTitle(it) },
+            modifier = Modifier.padding(8.dp),
             singleLine = true,
-
-            )
+        )
         OutlinedTextField(
             value = description.value,
             onValueChange = { viewModel.updateDescription(it) },
+            modifier = Modifier
+                .height(160.dp)
+                .padding(8.dp),
         )
 
         Row(
@@ -47,7 +55,9 @@ fun MainDetailsView(
             verticalAlignment = Alignment.Bottom,
         ) {
             Button(
-                onClick = { navController.popBackStack() },
+                onClick = {
+                    navController.popBackStack()
+                },
                 modifier = Modifier.padding(8.dp),
             ) {
                 Text(text = "Cancel")
@@ -56,7 +66,7 @@ fun MainDetailsView(
             Button(
                 onClick = {
                     viewModel.saveNote()
-                    navController.popBackStack()
+                    navController.navigateUp()
                 },
                 enabled = viewModel.ableToSave(),
                 modifier = Modifier.padding(8.dp),

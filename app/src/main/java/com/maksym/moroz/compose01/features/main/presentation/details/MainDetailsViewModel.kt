@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.maksym.moroz.compose01.features.main.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,12 +27,17 @@ class MainDetailsViewModel @Inject constructor(
     fun ableToSave() = _title.value.isNotEmpty() || _description.value.isNotEmpty()
 
     fun saveNote() {
+
         viewModelScope.launch {
             repository.saveItem(
                 title.value,
                 description.value,
             )
         }
+    }
+
+    fun clear() {
+        onCleared()
     }
 
     companion object {
