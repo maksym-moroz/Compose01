@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -39,7 +40,8 @@ fun MainDetailsView(
         OutlinedTextField(
             value = title.value,
             onValueChange = { viewModel.updateTitle(it) },
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .padding(8.dp),
             singleLine = true,
         )
         OutlinedTextField(

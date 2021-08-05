@@ -1,6 +1,6 @@
 package com.maksym.moroz.compose01.features.main.presentation.list
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,13 +32,16 @@ import com.maksym.moroz.compose01.R
 import com.maksym.moroz.compose01.features.main.presentation.navigation.ScreenNavigation
 import com.maksym.moroz.compose01.ui.theme.Purple700
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainListView(
     navController: NavController,
-    viewModel: MainListViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: MainListViewModel,
 ) {
-    val list by remember(viewModel) { viewModel.list }
+    val listViewState by remember(viewModel) { viewModel.currentToDoList }
+        .collectAsState()
+    val searchViewState by remember(viewModel) { viewModel.searchResultList }
+        .collectAsState()
+    val query by remember(viewModel) { viewModel.searchQuery }
         .collectAsState()
 
     Column(
@@ -47,11 +51,18 @@ fun MainListView(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom,
         ) {
+            OutlinedTextField(
+                value = query,
+                onValueChange = { viewModel.updateQuery(it) },
+                modifier = Modifier.padding(8.dp)
+            )
+
             Button(
                 onClick = {
                     navController.navigate(ScreenNavigation.DETAILS.route)
@@ -74,89 +85,122 @@ fun MainListView(
             }
         }
     }
-    if (list.isEmpty()) {
-        Box(
-            modifier = Modifier
-                .background(Color.Black)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.TopCenter,
-        ) {
-            Text(
-                text = stringResource(R.string.nothing_to_do),
-                modifier = Modifier
-                    .padding(16.dp),
-                color = Color.White,
-                fontSize = 16.sp,
-            )
+
+    when (listViewState) {
+        is ListViewState.Data -> ViewStateLazyColumn(
+            listViewState as ListViewState.Data,
+            searchViewState,
+            navController
+        )
+        is ListViewState.Loading -> ViewStatePlaceholder(R.string.loading)
+        is ListViewState.Empty -> ViewStatePlaceholder(R.string.nothing_to_do)
+        is ListViewState.Error -> ViewStatePlaceholder(R.string.something_went_wrong) {
+            background(Color.Red)
         }
-    } else {
-        LazyColumn(
-            verticalArrangement = Arrangement.Center,
-        ) {
-            items(list) { toDo ->
-                Box(
+    }
+}
+
+@Composable
+private fun ViewStateLazyColumn(
+    listViewState: ListViewState.Data,
+    searchViewState: SearchViewState,
+    navController: NavController,
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.Center,
+    ) {
+
+        val currentList = when (searchViewState) {
+            is SearchViewState.Data -> listViewState.value.filter { toDo ->
+                searchViewState.value.any { toDoFts -> toDo.id == toDoFts.id }
+            }
+            is SearchViewState.Empty -> listViewState.value
+            is SearchViewState.Invalid -> emptyList()
+        }
+        items(currentList) { toDo ->
+            Box(
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                        top = 8.dp,
+                        end = 8.dp,
+                    )
+                    .fillMaxWidth()
+                    .clickable {
+                        navController.navigate(
+                            ScreenNavigation.DETAILS.route,
+                        )
+                    },
+                contentAlignment = Alignment.CenterStart,
+            ) {
+                Column(
                     modifier = Modifier
-                        .background(Color.White)
-                        .padding(
-                            start = 8.dp,
-                            top = 8.dp,
-                            end = 8.dp,
-                        )
                         .fillMaxWidth()
-                        .clickable {
-                            navController.navigate(
-                                "details/${toDo.item.title}",
-                            )
-                        },
-                    contentAlignment = Alignment.CenterStart,
+                        .padding(
+                            horizontal = 4.dp,
+                        )
+                        .background(
+                            color = Purple700,
+                            shape = RoundedCornerShape(8.dp),
+                        )
+                        .padding(8.dp),
+                    verticalArrangement = Arrangement.Top,
                 ) {
-                    Column(
+                    Text(
+                        text = toDo.item.title,
+                        color = Color.White,
+                        fontSize = 24.sp,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 4.dp,
-                            )
+                            .padding(vertical = 4.dp)
                             .background(
-                                color = Purple700,
-                                shape = RoundedCornerShape(8.dp),
+                                brush = Brush.horizontalGradient(
+                                    listOf(Color.DarkGray, Color.LightGray),
+                                ),
+                                shape = RoundedCornerShape(4.dp),
+                                alpha = 0.2F,
                             )
-                            .padding(8.dp),
-                        verticalArrangement = Arrangement.Top,
-                    ) {
-                        Text(
-                            text = toDo.item.title,
-                            color = Color.White,
-                            fontSize = 24.sp,
-                            modifier = Modifier
-                                .padding(vertical = 4.dp)
-                                .background(
-                                    brush = Brush.horizontalGradient(
-                                        listOf(Color.DarkGray, Color.LightGray),
-                                    ),
-                                    shape = RoundedCornerShape(4.dp),
-                                    alpha = 0.2F,
-                                )
-                                .padding(horizontal = 4.dp),
-                        )
-                        Text(
-                            text = toDo.item.description,
-                            color = Color.White,
-                            fontSize = 16.sp,
-                            modifier = Modifier
-                                .padding(vertical = 4.dp)
-                                .background(
-                                    brush = Brush.horizontalGradient(
-                                        listOf(Color.DarkGray, Color.LightGray),
-                                    ),
-                                    shape = RoundedCornerShape(8.dp),
-                                    alpha = 0.2F,
-                                )
-                                .padding(horizontal = 4.dp),
-                            fontStyle = FontStyle.Italic,
-                        )
-                    }
+                            .padding(horizontal = 4.dp),
+                    )
+                    Text(
+                        text = toDo.item.description,
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .padding(vertical = 4.dp)
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    listOf(Color.DarkGray, Color.LightGray),
+                                ),
+                                shape = RoundedCornerShape(8.dp),
+                                alpha = 0.2F,
+                            )
+                            .padding(horizontal = 4.dp),
+                        fontStyle = FontStyle.Italic,
+                    )
                 }
             }
         }
+    }
+}
+
+@Composable
+private inline fun ViewStatePlaceholder(
+    @StringRes placeholder: Int,
+    modifier: Modifier.() -> Modifier = { this },
+) {
+    Box(
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxWidth()
+            .modifier(),
+        contentAlignment = Alignment.TopCenter,
+    ) {
+        Text(
+            text = stringResource(placeholder),
+            modifier = Modifier
+                .padding(16.dp),
+            color = Color.White,
+            fontSize = 16.sp,
+        )
     }
 }

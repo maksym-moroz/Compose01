@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TaskCategory(
-    val category: String = "Reminders",
+    val name: String = "Reminders",
     val color: CategoryColor = CategoryColor.LIGHT_GRAY,
 )

@@ -26,4 +26,7 @@ object AppModule {
 
     @Provides
     fun provideToDoDao(database: ToDoDatabase) = database.toDoDao()
+
+    @Provides
+    fun provideToDoDaoFts(database: ToDoDatabase) = database.toDoDaoFts()
 }
