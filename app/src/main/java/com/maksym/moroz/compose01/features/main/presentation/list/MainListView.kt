@@ -39,8 +39,6 @@ fun MainListView(
 ) {
     val listViewState by remember(viewModel) { viewModel.currentToDoList }
         .collectAsState()
-    val searchViewState by remember(viewModel) { viewModel.searchResultList }
-        .collectAsState()
     val query by remember(viewModel) { viewModel.searchQuery }
         .collectAsState()
 
@@ -89,10 +87,10 @@ fun MainListView(
     when (listViewState) {
         is ListViewState.Data -> ViewStateLazyColumn(
             listViewState as ListViewState.Data,
-            searchViewState,
             navController
         )
         is ListViewState.Loading -> ViewStatePlaceholder(R.string.loading)
+        is ListViewState.Nothing -> ViewStatePlaceholder(R.string.nothing_found)
         is ListViewState.Empty -> ViewStatePlaceholder(R.string.nothing_to_do)
         is ListViewState.Error -> ViewStatePlaceholder(R.string.something_went_wrong) {
             background(Color.Red)
@@ -103,21 +101,12 @@ fun MainListView(
 @Composable
 private fun ViewStateLazyColumn(
     listViewState: ListViewState.Data,
-    searchViewState: SearchViewState,
     navController: NavController,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.Center,
     ) {
-
-        val currentList = when (searchViewState) {
-            is SearchViewState.Data -> listViewState.value.filter { toDo ->
-                searchViewState.value.any { toDoFts -> toDo.id == toDoFts.id }
-            }
-            is SearchViewState.Empty -> listViewState.value
-            is SearchViewState.Invalid -> emptyList()
-        }
-        items(currentList) { toDo ->
+        items(listViewState.value) { toDo ->
             Box(
                 modifier = Modifier
                     .padding(

@@ -2,6 +2,7 @@
     <string name="app_name">Compose01</string>
     <string name="got_a_note_question_mark">Got a note?</string>
     <string name="nothing_to_do">Nothing to do</string>
+    <string name="nothing_found">Nothing found</string>
     <string name="something_went_wrong">Retry?</string>
     <string name="loading">Loading</string>
 </resources>
