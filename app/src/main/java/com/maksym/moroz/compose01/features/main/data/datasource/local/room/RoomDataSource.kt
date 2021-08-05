@@ -23,8 +23,8 @@ class RoomDataSource @Inject constructor(
     override fun loadAllItemsFlow() = dao.getAllItemsFlowDistinct()
         .mapToDomain { toDomain() }
 
-    override fun loadMatchingItemsFlow(query: String) = daoFts.getMatchingItemsFlowDistinct(query)
-        .mapToDomain { toDomain() }
+    override suspend fun loadMatchingItemsFlow(query: String) = daoFts.getMatchingItemsFlowDistinct(query)
+        .map { it.toDomain() }
 
     override suspend fun loadItemById(toDoId: ToDoId) = dao.getItemById(toDoId.id).toDomain()
 

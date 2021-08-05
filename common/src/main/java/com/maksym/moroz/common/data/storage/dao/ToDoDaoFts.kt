@@ -2,16 +2,14 @@ package com.maksym.moroz.common.data.storage.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.maksym.moroz.common.data.storage.entity.ToDoEntityFts
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import com.maksym.moroz.common.data.storage.entity.ToDoEntity
 
 @Dao
 abstract class ToDoDaoFts {
 
-    @Query("SELECT * FROM todo_fts WHERE todo_fts MATCH :query")
-    abstract fun getMatchingItemsFlow(query: String): Flow<List<ToDoEntityFts>>
+    @Query("SELECT * FROM todo JOIN todo_fts ON todo.id = todo_fts.id WHERE todo_fts MATCH :query")
+    abstract suspend fun getMatchingItemsFlow(query: String = ""): List<ToDoEntity>
 
-    fun getMatchingItemsFlowDistinct(query: String) =
-        getMatchingItemsFlow(query).distinctUntilChanged()
+    suspend fun getMatchingItemsFlowDistinct(query: String) =
+        getMatchingItemsFlow(query)
 }
