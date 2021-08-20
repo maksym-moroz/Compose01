@@ -14,8 +14,10 @@ object Dependencies {
         const val COMPOSE_UI = "androidx.compose.ui:ui:${Versions.COMPOSE}"
         const val COMPOSE_UI_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE}"
+        const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAVIGATION}"
         const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
         const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
+        const val HILT_NAVIGATION_COMPOSE = "androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE}"
 
         const val J_UNIT = "androidx.test.ext:junit:${Versions.J_UNIT}"
         const val COMPOSE_J_UNIT = "androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE_J_UNIT}"
@@ -29,13 +31,12 @@ object Dependencies {
             const val FRAGMENT = "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
             const val DATASTORE_COMMON = "androidx.datastore:datastore-preferences-core:${Versions.DATASTORE}"
             const val DATASTORE_ANDROID = "androidx.datastore:datastore-preferences:${Versions.DATASTORE}"
-
         }
     }
 
     object Dagger {
-        const val DAGGER_HILT = "com.google.dagger:hilt-android:${Versions.DAGGER_HILT}"
-        const val DAGGER_HILT_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.DAGGER_HILT}"
+        const val HILT = "com.google.dagger:hilt-android:${Versions.HILT}"
+        const val HILT_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
     }
 
     object Square {

@@ -1,5 +1,5 @@
 object Versions {
-    const val GRADLE = "7.0.0"
+    const val GRADLE = "7.0.1"
 
     const val KOTLIN = "1.5.10"
     const val KOTLIN_COROUTINES_ANDROID = "1.3.9"
@@ -9,11 +9,13 @@ object Versions {
     const val APP_COMPAT = "1.3.1"
     const val MATERIAL = "1.4.0"
     const val COMPOSE = "1.0.0"
+    const val NAVIGATION = "2.4.0-alpha07"
     const val ACTIVITY_COMPOSE = "1.3.0"
     const val LIFECYCLE = "2.4.0-alpha02"
     const val ROOM = "2.3.0"
     const val FRAGMENT_KTX = "1.3.6"
-    const val DAGGER_HILT = "2.37"
+    const val HILT = "2.37"
+    const val HILT_NAVIGATION_COMPOSE = "1.0.0-alpha03"
     const val RETROFIT = "2.9.0"
     const val RETROFIT_JSON = "0.8.0"
     const val DATASTORE = "1.0.0-rc02"
