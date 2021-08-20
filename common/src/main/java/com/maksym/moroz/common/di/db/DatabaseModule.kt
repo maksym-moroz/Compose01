@@ -24,9 +24,11 @@ object AppModule {
         "todo"
     ).build()
 
+    @Singleton
     @Provides
     fun provideToDoDao(database: ToDoDatabase) = database.toDoDao()
 
+    @Singleton
     @Provides
     fun provideToDoDaoFts(database: ToDoDatabase) = database.toDoDaoFts()
 }

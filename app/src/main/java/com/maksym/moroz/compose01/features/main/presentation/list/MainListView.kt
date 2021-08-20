@@ -1,6 +1,5 @@
 package com.maksym.moroz.compose01.features.main.presentation.list
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +17,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -27,21 +27,45 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.maksym.moroz.compose01.R
-import com.maksym.moroz.compose01.features.main.presentation.navigation.ScreenNavigation
+import com.maksym.moroz.compose01.features.main.presentation.common.ViewStatePlaceholder
 import com.maksym.moroz.compose01.ui.theme.Purple700
 
 @Composable
 fun MainListView(
-    navController: NavController,
-    viewModel: MainListViewModel,
+    onToDoClicked: (Int) -> Unit,
+    onGotAToDoClicked: () -> Unit,
+    viewModel: MainListViewModel = hiltViewModel(),
 ) {
-    val listViewState by remember(viewModel) { viewModel.currentToDoList }
-        .collectAsState()
-    val query by remember(viewModel) { viewModel.searchQuery }
+    val actions = ListActions(
+        onToDoClicked = onToDoClicked,
+        onGotAToDoClicked = onGotAToDoClicked,
+    )
+
+    val (query, setQuery) = rememberSaveable { mutableStateOf("") }
+    SearchAndAdd(query, setQuery, actions)
+
+    val viewState by viewModel.updateQuery(query)
         .collectAsState()
 
+    when (viewState) {
+        is ViewState.Data -> ViewStateLazyColumn(viewState as ViewState.Data, actions)
+        is ViewState.Loading -> ViewStatePlaceholder(R.string.loading)
+        is ViewState.Nothing -> ViewStatePlaceholder(R.string.nothing_found)
+        is ViewState.Empty -> ViewStatePlaceholder(R.string.nothing_to_do)
+        is ViewState.Error -> ViewStatePlaceholder(R.string.something_went_wrong) {
+            background(Color.Red)
+        }
+    }
+}
+
+@Composable
+private fun SearchAndAdd(
+    query: String,
+    setQuery: (String) -> Unit,
+    actions: ListActions,
+) {
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -57,14 +81,12 @@ fun MainListView(
         ) {
             OutlinedTextField(
                 value = query,
-                onValueChange = { viewModel.updateQuery(it) },
-                modifier = Modifier.padding(8.dp)
+                onValueChange = setQuery,
+                modifier = Modifier.padding(8.dp),
             )
 
             Button(
-                onClick = {
-                    navController.navigate(ScreenNavigation.DETAILS.route)
-                },
+                onClick = actions.onGotAToDoClicked
             ) {
                 Text(
                     text = stringResource(R.string.got_a_note_question_mark),
@@ -83,30 +105,17 @@ fun MainListView(
             }
         }
     }
-
-    when (listViewState) {
-        is ListViewState.Data -> ViewStateLazyColumn(
-            listViewState as ListViewState.Data,
-            navController
-        )
-        is ListViewState.Loading -> ViewStatePlaceholder(R.string.loading)
-        is ListViewState.Nothing -> ViewStatePlaceholder(R.string.nothing_found)
-        is ListViewState.Empty -> ViewStatePlaceholder(R.string.nothing_to_do)
-        is ListViewState.Error -> ViewStatePlaceholder(R.string.something_went_wrong) {
-            background(Color.Red)
-        }
-    }
 }
 
 @Composable
 private fun ViewStateLazyColumn(
-    listViewState: ListViewState.Data,
-    navController: NavController,
+    viewState: ViewState.Data,
+    actions: ListActions,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.Center,
     ) {
-        items(listViewState.value) { toDo ->
+        items(viewState.value) { toDo ->
             Box(
                 modifier = Modifier
                     .padding(
@@ -116,9 +125,7 @@ private fun ViewStateLazyColumn(
                     )
                     .fillMaxWidth()
                     .clickable {
-                        navController.navigate(
-                            ScreenNavigation.DETAILS.route,
-                        )
+                        actions.onToDoClicked(toDo.id)
                     },
                 contentAlignment = Alignment.CenterStart,
             ) {
@@ -169,27 +176,5 @@ private fun ViewStateLazyColumn(
                 }
             }
         }
-    }
-}
-
-@Composable
-private inline fun ViewStatePlaceholder(
-    @StringRes placeholder: Int,
-    modifier: Modifier.() -> Modifier = { this },
-) {
-    Box(
-        modifier = Modifier
-            .background(Color.Black)
-            .fillMaxWidth()
-            .modifier(),
-        contentAlignment = Alignment.TopCenter,
-    ) {
-        Text(
-            text = stringResource(placeholder),
-            modifier = Modifier
-                .padding(16.dp),
-            color = Color.White,
-            fontSize = 16.sp,
-        )
     }
 }

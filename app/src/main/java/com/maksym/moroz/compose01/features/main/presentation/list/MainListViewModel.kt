@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.maksym.moroz.common.domain.core.model.todo.ToDo
 import com.maksym.moroz.compose01.features.main.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -18,43 +19,36 @@ import javax.inject.Inject
 class MainListViewModel @Inject constructor(
     private val repository: MainRepository,
 ) : ViewModel() {
-    private val _currentToDoList = MutableStateFlow<ListViewState>(ListViewState.Loading)
-    private val allItems = MutableStateFlow<List<ToDo>>(emptyList())
-    private val _searchQuery = MutableStateFlow("")
-
-    val currentToDoList: StateFlow<ListViewState> = _currentToDoList
-    val searchQuery: StateFlow<String> = _searchQuery
+    private var allItems = emptyList<ToDo>()
+    private val currentToDoList = MutableStateFlow<ViewState>(ViewState.Loading)
 
     init {
         loadItems()
     }
 
-    fun updateQuery(query: String) {
+    fun updateQuery(query: String): StateFlow<ViewState> {
         viewModelScope.launch {
-            _searchQuery.emit(query)
-            val searchList = repository.loadMatchingToDoListFlow("*$query*")
-            val currentList = allItems.value
+            val searchList = repository.loadMatchingToDoListFlow(query)
+            val currentList = allItems
             val resultList = when {
-                currentList.isEmpty() && query.isEmpty() -> ListViewState.Empty
-                searchList.isEmpty() && query.isEmpty() -> ListViewState.Data(currentList)
-                searchList.isEmpty() && query.isNotEmpty() -> ListViewState.Nothing
-                else -> ListViewState.Data(searchList)
+                currentList.isEmpty() && query.isEmpty() -> ViewState.Empty
+                searchList.isEmpty() && query.isEmpty() -> ViewState.Data(currentList)
+                searchList.isEmpty() && query.isNotEmpty() -> ViewState.Nothing
+                else -> ViewState.Data(searchList)
             }
-            _currentToDoList.emit(resultList)
+            currentToDoList.value = resultList
         }
+        return currentToDoList
     }
 
-    private fun loadItems() = with(_currentToDoList) {
+    private fun loadItems() = with(currentToDoList) {
         repository.loadToDoListFlow()
-            .onStart { ListViewState.Loading }
+            .onStart { delay(500L) }
             .onEach { list ->
-                allItems.emit(list)
-                emit(
-                    if (list.isEmpty()) ListViewState.Empty
-                    else ListViewState.Data(list)
-                )
+                allItems = list
+                value = if (list.isEmpty()) ViewState.Empty else ViewState.Data(list)
             }
-            .catch { emit(ListViewState.Error) }
+            .catch { value = ViewState.Error }
             .launchIn(viewModelScope)
     }
 }

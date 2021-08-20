@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":common"))
+    implementation(project(":navigation"))
     implementation(project(":login"))
 
     implementation(Dependencies.Android.MATERIAL)
@@ -67,9 +68,10 @@ dependencies {
     implementation(Dependencies.AndroidX.Ktx.FRAGMENT)
     implementation(Dependencies.AndroidX.Ktx.DATASTORE_ANDROID)
     implementation(Dependencies.AndroidX.Ktx.ROOM)
-    implementation(Dependencies.Dagger.DAGGER_HILT)
+    implementation(Dependencies.AndroidX.HILT_NAVIGATION_COMPOSE)
+    implementation(Dependencies.Dagger.HILT)
 
-    kapt(Dependencies.Dagger.DAGGER_HILT_COMPILER)
+    kapt(Dependencies.Dagger.HILT_COMPILER)
     kapt(Dependencies.AndroidX.ROOM_COMPILER)
 
     androidTestImplementation(Dependencies.AndroidX.J_UNIT)

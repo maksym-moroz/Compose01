@@ -9,3 +9,4 @@ rootProject.name = "Compose01"
 include(":app")
 include(":common")
 include(":login")
+include(":navigation")

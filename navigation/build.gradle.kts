@@ -4,7 +4,6 @@ plugins {
     kotlin("kapt")
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -15,17 +14,11 @@ android {
         minSdk = Config.MIN_SDK_VERSION
         targetSdk = Config.TARGET_SDK_VERSION
 
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-                arg("room.incremental", "true")
-            }
-        }
-
         vectorDrawables {
             useSupportLibrary = true
         }
     }
+
 
     buildTypes {
         getByName("release") {
@@ -44,27 +37,34 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE
+    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(project(":common"))
 
-    api(Dependencies.Kotlin.SERIALIZATION_JSON)
-    api(Dependencies.Kotlin.COROUTINES_ANDROID)
-    api(Dependencies.AndroidX.Ktx.CORE)
-    api(Dependencies.AndroidX.Ktx.ROOM)
-    api(Dependencies.AndroidX.Ktx.DATASTORE_COMMON)
-    api(Dependencies.Dagger.HILT)
-    api(Dependencies.Square.RETROFIT)
-    api(Dependencies.Square.RETROFIT_JSON)
-
-    kapt(Dependencies.AndroidX.ROOM_COMPILER)
-    kapt(Dependencies.Dagger.HILT_COMPILER)
+    implementation(Dependencies.Android.MATERIAL)
+    implementation(Dependencies.AndroidX.APP_COMPAT)
+    implementation(Dependencies.AndroidX.COMPOSE_UI)
+    implementation(Dependencies.AndroidX.COMPOSE_MATERIAL)
+    implementation(Dependencies.AndroidX.COMPOSE_UI_TOOLING_PREVIEW)
+    implementation(Dependencies.AndroidX.ACTIVITY_COMPOSE)
+    implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_ANNOTATIONS)
+    implementation(Dependencies.AndroidX.Ktx.LIFECYCLE_VIEWMODEL)
+    implementation(Dependencies.AndroidX.Ktx.FRAGMENT)
+    implementation(Dependencies.AndroidX.Ktx.DATASTORE_ANDROID)
 
     androidTestImplementation(Dependencies.AndroidX.J_UNIT)
+    androidTestImplementation(Dependencies.AndroidX.COMPOSE_J_UNIT)
     androidTestImplementation(Dependencies.AndroidX.ESPRESSO)
 
-    testApi("junit:junit:4.+")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.0.1")
 }
 
 kapt {

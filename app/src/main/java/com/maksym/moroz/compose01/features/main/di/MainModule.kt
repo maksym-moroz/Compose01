@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class MainModule {
+abstract class BindsModule {
 
     @Binds
     abstract fun bindRoomDataSource(roomDataSource: RoomDataSource): LocalDataSource
