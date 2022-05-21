@@ -14,6 +14,7 @@ object Dependencies {
         const val COMPOSE_UI = "androidx.compose.ui:ui:${Versions.COMPOSE}"
         const val COMPOSE_UI_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
         const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE}"
+        const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAVIGATION}"
         const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
         const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
 
@@ -29,7 +30,6 @@ object Dependencies {
             const val FRAGMENT = "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
             const val DATASTORE_COMMON = "androidx.datastore:datastore-preferences-core:${Versions.DATASTORE}"
             const val DATASTORE_ANDROID = "androidx.datastore:datastore-preferences:${Versions.DATASTORE}"
-
         }
     }
 

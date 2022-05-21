@@ -9,6 +9,7 @@ object Versions {
     const val APP_COMPAT = "1.3.1"
     const val MATERIAL = "1.4.0"
     const val COMPOSE = "1.0.0"
+    const val NAVIGATION = "2.4.0-alpha05"
     const val ACTIVITY_COMPOSE = "1.3.0"
     const val LIFECYCLE = "2.4.0-alpha02"
     const val ROOM = "2.3.0"
